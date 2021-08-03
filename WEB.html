@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    
+   
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head> 
+  <body onload="hide()">
+  <center>
+  <h1>Company name here </h1>
+  <h4 id="result">Attandence System</h4>
+
+  <div id="spinner" class="spinner-border text-success" role="status" >
+  
+  </div>
+
+  <div class="row" style="
+  width:90%;
+  margin-top: 70px;
+  ">
+
+  <div class="col">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+  </svg>
+  <br>
+    <input id="ID" oninput="res('Attandence System') " type="text" class="form-control" placeholder="Enter Your ID" aria-label="UserName" style="margin-top:30px;">
+  </div>
+
+
+
+<div class="btn-group" role="group" aria-label="Basic example" style="margin-top: 20px;">
+
+  <button  onclick="check_in()" type="button"  class="btn btn-primary" style="width:200px;" >Check IN</button>
+  <button  onclick="check_out()" type="button" class="btn btn-danger" style="width: 200px;">Check OUT</button>
+
+</div>
+</div>
+
+</center>
+<script type="text/javascript">
+  
+var ID = document.getElementById('ID');
+function hide(){
+  document.getElementById("spinner").style.visibility = "hidden";
+
+}    
+function unhide(){
+  document.getElementById("spinner").style.visibility = "visible";
+
+}
+
+
+function res(m){
+  document.getElementById('result').innerText = m;
+}
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+function check_in(){
+  unhide();
+
+  google.script.run.withSuccessHandler((x)=>{
+    if(x>=0){
+      //here dont code like this if(x) because x is the successfull result and may be read as true value
+      //ID exist
+      google.script.run.Check_IN(ID.value);
+
+      //result successful
+      res('Thank You');
+
+      //erase input now
+      hide();
+      ID.value='';
+    }else{
+      res('ID NOT FOUND');
+      //erase input now
+      hide()
+      ID.value='';
+    }
+  }).index(ID.value);
+  
+  
+}
+/*+++++++++++++++++++++++++++++++++++++++++++++++++*/
+function check_out(){
+
+unhide();
+
+  google.script.run.withSuccessHandler((x)=>{
+    
+    if(x>=0){
+      //if user exist
+      //make a check out
+      google.script.run.Check_Out(ID.value);
+
+      //result successful
+      res('Thank You');
+      
+      //erase input now
+      hide();
+      ID.value='';
+    }else{
+      res('ID NOT FOUND');
+      
+      //erase input now
+      hide();
+      ID.value='';
+    }
+
+  }).index(ID.value);
+
+}
+
+  
+  </script>
+  <br>
+  <center> <footer>Designed by mashoun.me@gmail.com</footer> </center>
+  </body>
+</html>
